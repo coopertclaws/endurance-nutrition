@@ -1,24 +1,24 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Comment = mongoose.model('comments');
+var User = mongoose.model('users');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  Comment.find(function(err, comments) {
-    console.log(comments)
+  User.find(function(err, users) {
+    console.log(users)
     res.render(
       'registration',
-      {title : 'Late Registration, Bitch', comments : comments}
+      {title : 'Late Registration, Bitch', users : users}
     );
   });
 });
 
 /* POST form. */
 router.post('/', function(req, res, next) {
-  new Comment({title : req.body.comment})
-  .save(function(err, comment) {
-    console.log(comment)
+  new User({name : req.body.name, email : req.body.email})
+  .save(function(err, user) {
+    console.log(user.name)
     res.redirect('registration');
   });
 });

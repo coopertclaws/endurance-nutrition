@@ -1,10 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var Comment = new Schema({
-  title : String,
+var User = new Schema({
+//  title : String,
+  name: String,
+  email: String,
+  dob: Date,
+  weight: Number
 });
 
-mongoose.model('comments', Comment);
+mongoose.model('users', User);
 
 mongoose.connect('mongodb+srv://web:KtpgA5hSwZqrcOcT@mongodb-g7brx.mongodb.net/enduronut?retryWrites=true&w=majority')
