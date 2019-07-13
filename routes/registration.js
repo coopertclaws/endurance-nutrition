@@ -16,7 +16,12 @@ router.get('/', function(req, res, next) {
 
 /* POST form. */
 router.post('/', function(req, res, next) {
-  new User({name : req.body.name, email : req.body.email})
+  new User({
+    name : req.body.name,
+    email : req.body.email,
+    dob : req.body.dob,
+    weight : req.body.weight
+  })
   .save(function(err, user) {
     console.log(user.name)
     res.redirect('registration');
