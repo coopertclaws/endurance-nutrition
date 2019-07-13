@@ -24,7 +24,7 @@ router.post('/', function(req, res, next) {
   })
   .save(function(err, user) {
     console.log(user.name)
-    res.redirect('registration');
+    res.redirect('users');
   });
 });
 
