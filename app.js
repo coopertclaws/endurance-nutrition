@@ -8,6 +8,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registrationRouter = require('./routes/registration');
+var productRouter = require('./routes/product');
+var productlistRouter = require('./routes/productlist');
 
 var app = express();
 
@@ -25,6 +27,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/registration', registrationRouter);
 app.use('/create', registrationRouter);
+app.use('/product', productRouter);
+app.use('/productlist', productlistRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  form(action="/product" method="POST" class="form-registration")
+    label(for="product_type") Product Type:
+    input(
+      type="text"
+      id="product_type"
+      name="product_type"
+      class="form-control"
+      value=product_type
+    )
+
+    label(for="product_name") Product Name:
+    input(
+      type="text"
+      id="product_name"
+      name="product_name"
+      class="form-control"
+      value=product_name
+    )
+
+    label(for="flavour") Flavour:
+    input(
+      type="text"
+      id="flavour"
+      name="flavour"
+      class="form-control"
+      value=flavour
+    )
+
+    label(for="mass") Mass (g):
+    input(
+      type="number"
+      id="mass"
+      name="mass"
+      class="form-control"
+      value=mass
+    )
+
+    input(
+      type="submit"
+      value="Submit"
+      class="btn btn-lg btn-primary btn-block"
+    )
