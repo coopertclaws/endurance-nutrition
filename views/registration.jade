@@ -1,13 +1,27 @@
 extends layout
 
 block content
-  h1= title
-  form(method="post" action="create")
-    label(for="name") Full Name:
-    input(type="text", name="name", value=name)
-    label(for="email") Email address:
-    input(type="text", name="email", value=email)
-    input(type="submit", value="Save")
-  br
-  - for user in users
-    p= user.name
+  form(action="/create" method="POST" class="form-registration")
+    label(for="name") Name:
+    input(
+      type="text"
+      id="name"
+      name="name"
+      class="form-control"
+      value=name
+    )
+
+    label(for="email") Email:
+    input(
+      type="email"
+      id="email"
+      name="email"
+      class="form-control"
+      value=email
+    )
+
+    input(
+      type="submit"
+      value="Submit"
+      class="btn btn-lg btn-primary btn-block"
+    )
