@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title= title
+    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+  body
+    block navBar
+      div.container
+        ul.col-md-12.row
+          a(href="#")
+              li.col-md-3.col-md-offset-1 Register
+          a(href="#")
+              li.col-md-3 Login
+          a(href="#")
+              li.col-md-3 About Chatbox
+    div.container.listing-reg
+    block content
