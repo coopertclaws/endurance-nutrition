@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     console.log(users)
     res.render(
       'registration',
-      {title : 'Late Registration, Bitch', users : users}
+      {title : 'Add a User', users : users}
     );
   });
 });

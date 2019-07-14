@@ -1,6 +1,9 @@
 extends layout
 
 block content
+  h1= title
+  br
+  
   form(action="/product" method="POST" class="form-registration")
     label(for="product_type") Product Type:
     input(

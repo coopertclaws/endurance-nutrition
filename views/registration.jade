@@ -1,6 +1,9 @@
 extends layout
 
 block content
+  h1= title
+  br
+
   form(action="/create" method="POST" class="form-registration")
     label(for="name") Name:
     input(
@@ -36,7 +39,7 @@ block content
       name="weight"
       class="form-control"
       value=weight
-    )    
+    )
 
     input(
       type="submit"
