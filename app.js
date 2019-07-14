@@ -29,6 +29,7 @@ app.use('/registration', registrationRouter);
 app.use('/create', registrationRouter);
 app.use('/product', productRouter);
 app.use('/productlist', productlistRouter);
+app.use('/delete', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -13,4 +13,12 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.post('/', function(req, res, next) {
+  console.log(req.body);
+  User.findByIdAndRemove({_id: req.body.userlist},
+    function(err, docs){
+      if(err) res.json(err);
+      else res.redirect('users');
+    });
+});
 module.exports = router;
