@@ -13,7 +13,18 @@ var Product = new Schema({
   product_type: String,
   product_name: String,
   flavour: String,
-  mass: Number
+  mass: Number,
+  calories: Number,
+  carbs: Number,
+  protein: Number,
+  fat: Number,
+  sodium: Number,
+  chloride: Number,
+  potassium: Number,
+  calcium: Number,
+  caffeine: Number,
+  vendor: String,
+  notes: String
 });
 
 mongoose.model('users', User);

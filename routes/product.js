@@ -17,7 +17,18 @@ router.post('/', function(req, res, next) {
     product_type : req.body.product_type,
     product_name : req.body.product_name,
     flavour : req.body.flavour,
-    mass : req.body.mass
+    mass : req.body.mass,
+    calories: req.body.calories,
+    carbs: req.body.carbs,
+    protein: req.body.protein,
+    fat: req.body.fat,
+    sodium: req.body.sodium,
+    chloride: req.body.chloride,
+    potassium: req.body.potassium,
+    calcium: req.body.calcium,
+    caffeine: req.body.caffeine,
+    vendor: req.body.vendor,
+    notes: req.body.notes
   })
   .save(function(err, product) {
     console.log(product.product_type);

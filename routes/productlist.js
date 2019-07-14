@@ -13,4 +13,13 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.post('/', function(req, res, next) {
+  console.log(req.body);
+  Product.findByIdAndRemove({_id: req.body.productlist},
+    function(err, docs){
+      if(err) res.json(err);
+      else res.redirect('productlist');
+    });
+});
+
 module.exports = router;
