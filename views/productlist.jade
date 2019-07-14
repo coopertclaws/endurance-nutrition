@@ -7,6 +7,7 @@ block content
   table(class="table")
     thead
       tr
+        th doc ID
         th Type
         th Name
         th Flavour
@@ -14,6 +15,7 @@ block content
     tbody
       - each product in products
         tr
+          td= product._id
           td= product.product_type
           td= product.product_name
           td= product.flavour
