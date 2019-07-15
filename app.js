@@ -11,6 +11,8 @@ var registrationRouter = require('./routes/registration');
 var productRouter = require('./routes/product');
 var productlistRouter = require('./routes/productlist');
 
+const basicAuth = require('express-basic-auth');
+
 var app = express();
 
 // view engine setup
@@ -22,6 +24,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(basicAuth({
+  users: { nsf: 'smashthestate' },
+  challenge: true
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
