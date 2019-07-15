@@ -1,6 +1,7 @@
 body {
   padding: 40px 10px;
   background-color: #eee;
+  background-image: url(/images/background.jpg)
 }
 .listing-reg h1 {
   text-align: center;
@@ -57,4 +58,7 @@ body {
 .listing-table td:first-child,
 .listing-table th:first-child {
   border-right: 1px solid #666;
+}
+.jumbotron{
+  background-image: url(/images/background.jpg);
 }
