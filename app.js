@@ -1,3 +1,4 @@
+require('dotenv').config();
 require('./database');
 var createError = require('http-errors');
 var express = require('express');
@@ -25,10 +26,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use(basicAuth({
-  users: { nsf: 'smashthestate' },
+  users: { admin: `${process.env.ADMINPASS}` },
   challenge: true
 }));
+console.log(process.env.ADMINUSER);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -31,4 +31,4 @@ mongoose.model('users', User);
 
 mongoose.model('products', Product);
 
-mongoose.connect('mongodb+srv://web:KtpgA5hSwZqrcOcT@mongodb-g7brx.mongodb.net/enduronut?retryWrites=true&w=majority')
+mongoose.connect(`${process.env.DATABASECONN}`, { useNewUrlParser: true });
