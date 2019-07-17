@@ -11,7 +11,8 @@ router.get('/', function(req, res, next) {
 /* POST form. */
 router.post('/', function(req, res, next) {
   calculateAvgSpd(req.body.distance, req.body.time, function(rslt) {
-    console.log(findClosest(array, 9));
+
+    console.log(getMets(findClosest(array, 6.4)));
     res.render('recommendations', { calories: rslt});
   });
 
@@ -19,13 +20,62 @@ router.post('/', function(req, res, next) {
 
 const calculateAvgSpd = (distance, time, callback) => {
   var avgspd = (distance*time);
-  if (callback && typeof(callback) === "function") {
-    callback(avgspd);
-  }
-  return avgspd;
+
+  callback(avgspd);
+
 };
 
-var array = [2, 4, 6, 7, 10];
+var array = [6, 6.5, 7, 7.5, 8, 8.5, 9, 10, 11.5, 12];
+var metsTable = [
+  {
+    pace: 6,
+    met: 16
+  },
+  {
+    pace: 6.5,
+    met: 15
+  },
+  {
+    pace: 7,
+    met: 14
+  },
+  {
+    pace: 7.5,
+    met: 13.5
+  },
+  {
+    pace: 8,
+    met: 12.5
+  },
+  {
+    pace: 8.5,
+    met: 11.5
+  },
+  {
+    pace: 9,
+    met: 11
+  },
+  {
+    pace: 10,
+    met: 10
+  },
+  {
+    pace: 11.5,
+    met: 9
+  },
+  {
+    pace: 12,
+    met: 8
+  }
+];
+
+function getMets(pace) {
+  var filteredMets = metsTable.filter(function (result) {
+    return result.pace === pace;
+  });
+
+  return filteredMets[0].met;
+};
 
 function findClosest(array,num) {
   var i=0;
