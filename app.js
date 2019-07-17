@@ -11,6 +11,7 @@ var usersRouter = require('./routes/users');
 var registrationRouter = require('./routes/registration');
 var productRouter = require('./routes/product');
 var productlistRouter = require('./routes/productlist');
+var manualraceRouter = require('./routes/manualrace');
 
 const basicAuth = require('express-basic-auth');
 
@@ -41,6 +42,7 @@ app.use('/product', productRouter);
 app.use('/productlist', productlistRouter);
 app.use('/delete', usersRouter);
 app.use('/deleteproduct', productlistRouter);
+app.use('/manualrace', manualraceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
