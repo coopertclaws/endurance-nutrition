@@ -3,6 +3,8 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('users');
 
+//var mass = 88;
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.render('manualrace', { title: 'Enter a race manually' });
@@ -10,18 +12,21 @@ router.get('/', function(req, res, next) {
 
 /* POST form. */
 router.post('/', function(req, res, next) {
-  calculateAvgSpd(req.body.distance, req.body.time, function(rslt) {
+  calculatePace(req.body.distance, req.body.time, function(rslt) {
 
-    console.log(getMets(findClosest(array, 6.4)));
-    res.render('recommendations', { calories: rslt});
+//    console.log(getMets(findClosest(array, rslt)));
+//    console.log(getCalories(getMets(findClosest(array, rslt)), req.body.time));
+    var totalCalories = getCalories(getMets(findClosest(array, rslt)), req.body.time, req.body.weight);
+
+    res.render('recommendations', { pace: rslt, totalCalories: totalCalories});
   });
 
 });
 
-const calculateAvgSpd = (distance, time, callback) => {
-  var avgspd = (distance*time);
+const calculatePace = (distance, time, callback) => {
+  var pace = (1.60934*(time/distance));
 
-  callback(avgspd);
+  callback(pace);
 
 };
 
@@ -89,6 +94,11 @@ function findClosest(array,num) {
     }
   }
   return ans;
+}
+
+function getCalories(mets, time, weight) {
+  var calories = (((weight*(mets*3.5))/200)*time);
+  return calories;
 }
 
 module.exports = router;
