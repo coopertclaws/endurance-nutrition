@@ -1,5 +1,10 @@
 require('dotenv').config();
 require('./database');
+
+const session = require('express-session');
+const { ExpressOIDC } = require('@okta/oidc-middleware');
+var okta = require("@okta/okta-sdk-nodejs");
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -27,15 +32,57 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: process.env.SECRET,
+  resave: true,
+  saveUninitialized: false
+}));
+
+// var oktaClient = new okta.Client({
+//   orgUrl: process.env.ORGURL,
+//   token: process.env.TOKEN
+// });
+
+const oidc = new ExpressOIDC({
+  issuer: process.env.ISSUER,
+  client_id: process.env.CLIENT_ID,
+  client_secret: process.env.CLIENT_SECRET,
+  appBaseUrl: process.env.APPBASEURL,
+  redirect_uri: process.env.REDIRECT_URI,
+  scope: 'openid profile'
+});
+
+app.use(oidc.router);
+
+// app.use((req, res, next) => {
+//   if (!req.userinfo) {
+//     return next();
+//   }
+//   oktaClient.getUser(req.userinfo.sub)
+//     .then(user => {
+//       req.user = user;
+//       res.locals.user = user;
+//       next();
+//     }).catch(err => {
+//       next(err);
+//     });
+// });
 
 app.use(basicAuth({
   users: { admin: `${process.env.ADMINPASS}` },
   challenge: true
 }));
-console.log(process.env.ADMINUSER);
+
+// function loginRequired(req, res, next) {
+//   if (!req.user) {
+//     return res.status(401).render("unauthenticated");
+//   }
+//
+//   next();
+// }
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', oidc.ensureAuthenticated(), usersRouter);
 app.use('/registration', registrationRouter);
 app.use('/create', registrationRouter);
 app.use('/product', productRouter);
@@ -43,6 +90,10 @@ app.use('/productlist', productlistRouter);
 app.use('/delete', usersRouter);
 app.use('/deleteproduct', productlistRouter);
 app.use('/manualrace', manualraceRouter);
+
+app.get('/protected', oidc.ensureAuthenticated(), (req, res) => {
+  res.send(JSON.stringify(req.userContext.userinfo));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
