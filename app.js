@@ -17,10 +17,11 @@ var registrationRouter = require('./routes/registration');
 var productRouter = require('./routes/product');
 var productlistRouter = require('./routes/productlist');
 var manualraceRouter = require('./routes/manualrace');
+var myprofileRouter = require('./routes/myprofile');
 
 const basicAuth = require('express-basic-auth');
 
-var app = express();
+var app = module.exports = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,10 +39,10 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// var oktaClient = new okta.Client({
-//   orgUrl: process.env.ORGURL,
-//   token: process.env.TOKEN
-// });
+var oktaClient = new okta.Client({
+  orgUrl: process.env.ORGURL,
+  token: process.env.TOKEN
+});
 
 const oidc = new ExpressOIDC({
   issuer: process.env.ISSUER,
@@ -54,32 +55,24 @@ const oidc = new ExpressOIDC({
 
 app.use(oidc.router);
 
-// app.use((req, res, next) => {
-//   if (!req.userinfo) {
-//     return next();
-//   }
-//   oktaClient.getUser(req.userinfo.sub)
-//     .then(user => {
-//       req.user = user;
-//       res.locals.user = user;
-//       next();
-//     }).catch(err => {
-//       next(err);
-//     });
-// });
+app.use((req, res, next) => {
+  if (!req.userinfo) {
+    return next();
+  }
+  oktaClient.getUser(req.userinfo.sub)
+    .then(user => {
+      req.user = user;
+      res.locals.user = user;
+      next();
+    }).catch(err => {
+      next(err);
+    });
+});
 
 app.use(basicAuth({
   users: { admin: `${process.env.ADMINPASS}` },
   challenge: true
 }));
-
-// function loginRequired(req, res, next) {
-//   if (!req.user) {
-//     return res.status(401).render("unauthenticated");
-//   }
-//
-//   next();
-// }
 
 app.use('/', indexRouter);
 app.use('/users', oidc.ensureAuthenticated(), usersRouter);
@@ -90,6 +83,7 @@ app.use('/productlist', productlistRouter);
 app.use('/delete', usersRouter);
 app.use('/deleteproduct', productlistRouter);
 app.use('/manualrace', manualraceRouter);
+app.use('/myprofile', oidc.ensureAuthenticated(), myprofileRouter);
 
 app.get('/protected', oidc.ensureAuthenticated(), (req, res) => {
   res.send(JSON.stringify(req.userContext.userinfo));
@@ -111,4 +105,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+//module.exports = app;
