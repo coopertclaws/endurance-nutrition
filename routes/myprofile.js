@@ -30,9 +30,8 @@ router.use((req, res, next) => {
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log(JSON.stringify(req.userContext.userinfo));
-  console.log(res.locals.user);
-  res.send(JSON.stringify(req.userContext.userinfo));
-//  res.render('myprofile', { title: 'My Profile' });
+//  res.send(JSON.stringify(req.userContext.userinfo));
+  res.render('myprofile', { title: 'My Profile', given_name: req.userContext.userinfo.given_name });
 });
 
 
