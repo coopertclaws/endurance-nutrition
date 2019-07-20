@@ -27,11 +27,25 @@ router.use((req, res, next) => {
     });
 });
 
+// router.use((req, res, next) => {
+//   if (!req.userinfo) {
+//     return next();
+//   }
+//   oktaClient.getApplicationUser('0oaek3gxtYN8gGt7E356', req.userinfo.sub)
+//     .then(user => {
+//       req.user = user;
+//       res.locals.user = user;
+//       next();
+//     }).catch(err => {
+//       next(err);
+//     });
+// });
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log(JSON.stringify(req.userContext.userinfo));
 //  res.send(JSON.stringify(req.userContext.userinfo));
-  res.render('myprofile', { title: 'My Profile', given_name: req.userContext.userinfo.given_name });
+  res.render('myprofile', { title: 'My Profile', given_name: req.userContext.userinfo.given_name, weight: req.userContext.userinfo.weight });
 });
 
 
